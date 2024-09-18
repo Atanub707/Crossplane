@@ -1,0 +1,30 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: storages.custom-api.example.org
+spec:
+  group: custom-api.example.org
+  names:
+    kind: storage
+    plural: storages
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                location:
+                  type: string
+                  oneOf:
+                    - pattern: '^US$'
+                    - pattern: '^EU$'
+              required:
+                - location
+  claimNames:
+    kind: storagebucket
+    plural: storagesbuckets
